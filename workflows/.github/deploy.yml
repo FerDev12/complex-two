@@ -1,4 +1,4 @@
-name: Complex-CI
+name: Complex CI
 on:
   push:
     branches:
@@ -16,16 +16,16 @@ jobs:
       - run: docker run -e CI=true ferdev12/react-test npm test
 
       # Build app
-      - run: docker build -t ferdev12/multi-client-10-14 ./client
-      - run: docker build -t ferdev12/multi-nginx-10-14 ./nginx
-      - run: docker build -t ferdev12/multi-server-10-14 ./server
-      - run: docker build -t ferdev12/multi-worker-10-14 ./worker
+      - run: docker build -t ferdev12/multi-client ./client
+      - run: docker build -t ferdev12/multi-nginx ./nginx
+      - run: docker build -t ferdev12/multi-server ./server
+      - run: docker build -t ferdev12/multi-worker ./worker
 
       # Push to docker hub
-      - run: docker push ferdev12/multi-client-10-14
-      - run: docker push ferdev12/multi-nginx-10-14
-      - run: docker push ferdev12/multi-server-10-14
-      - run: docker push ferdev12/multi-worker-10-14
+      - run: docker push ferdev12/multi-client
+      - run: docker push ferdev12/multi-nginx
+      - run: docker push ferdev12/multi-server
+      - run: docker push ferdev12/multi-worker
 
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
@@ -35,7 +35,7 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: multi-gh
+          application_name: complex-ci
           environment_name: Multigh-env
           existing_bucket_name: elasticbeanstalk-us-east-1-923445559289
           region: us-east-1
